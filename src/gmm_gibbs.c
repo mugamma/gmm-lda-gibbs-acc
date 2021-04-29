@@ -89,9 +89,9 @@ void update_sufficient_statistic(struct gmm_gibbs_state *state)
 
 void update_ws(struct gmm_gibbs_state *state)
 {
-    double dirichlet_param[state->prior.k];
-    vec_add(dirichlet_param, state->ss->ns, state->params->weights);
-    dirichlet(state->params->weights, dirichlet_param);
+    double dirichlet_param[state->k];
+    vec_add(dirichlet_param, state->ss->ns, state->params->weights, state->k);
+    dirichlet(state->params->weights, dirichlet_param, state->k);
 }
 
 void update_means(struct gmm_gibbs_state *state)
@@ -132,7 +132,7 @@ void update_zs(struct gmm_gibbs_state *state)
             weights[j] = gaussian_pdf(mu, sigma2, x);
         }
         normalize(weights);
-        state->params->zs[i] = categorical(weights);
+        state->params->zs[i] = categorical(weights, state->k);
     }
 }
 
