@@ -1,6 +1,8 @@
 #include <float.h>
 #include <math.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 void vec_add(double *dst, double *u, double *v, size_t k)
@@ -33,4 +35,12 @@ double beta(double *x, size_t n)
     double gamma_prod=1, sum=0;
     for(int i=0; i < n; gamma_prod *= tgamma(x[i]), sum += x[i], i++);
     return gamma_prod / tgamma(sum);
+}
+
+void *abort_calloc(size_t nmemb, size_t size)
+{
+    void *mem = calloc(nmemb, size);
+    if(mem == NULL)
+        fputs("insufficient memory", stderr), abort();
+    return mem;
 }

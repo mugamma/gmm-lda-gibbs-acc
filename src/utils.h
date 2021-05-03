@@ -14,3 +14,7 @@ double ligamma(double s, double x);
 double uigamma(double s, double x) { return tgamma(s) - ligamma(s, x); }
 
 double beta(double *x, size_t n);
+
+// try to malloc/calloc and abort if unsuccessful
+void *abort_calloc(size_t nmemb, size_t size);
+void *abort_malloc(size_t size) { return abort_calloc(1, size); }
