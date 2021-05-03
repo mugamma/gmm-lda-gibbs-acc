@@ -1,11 +1,26 @@
-CPP=g++
-CFLAGS=--std=c++11 -Wall
-MODULE := int_test
+CC=gcc
+CFLAGS=--std=c99 -Wall -Wpedantic -lm
+TESTS := int_test
+MODULES := distrs utils gmm gmm_gibbs
 
-all: $(MODULE)
+all: $(MODULES) $(TESTS)
 
-int_test: test/int_test.c src/gmm.h
-	$(CPP) $^ $(CFLAGS) -o $@
+distrs: src/distrs.c src/distrs.h
+	$(CC) -c $(CFLAGS) $< -o obj/$@.o
+
+utils: src/utils.c src/utils.h
+	$(CC) -c $(CFLAGS) $< -o obj/$@.o
+
+gmm: src/gmm.c src/gmm.h
+	$(CC) -c $(CFLAGS) $< -o obj/$@.o
+
+gmm_gibbs: src/gmm_gibbs.c src/gmm.h
+	$(CC) -c $(CFLAGS) $< -o obj/$@.o
+
+int_test: test/int_test.c
+	$(CC) $(CFLAGS) obj/* $^ -o bin/$@
+	@echo ./bin/$@
 
 clean:
-	rm -f $(MODULE)
+	rm -f bin/*
+	rm -f obj/*
