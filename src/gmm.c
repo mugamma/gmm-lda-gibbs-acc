@@ -3,15 +3,12 @@
 #include <string.h>
 
 #include "distrs.h"
+#include "utils.h"
 #include "gmm.h"
 
 void alloc_dirichlet_param(double **dirichlet_param, double param, size_t k)
 {
-    *dirichlet_param = (double *) calloc(k, sizeof(double));
-    if(dirichlet_param == NULL) {
-        fputs("insufficient memory.", stderr);
-        exit(1);
-    }
+    *dirichlet_param = (double *) abort_calloc(k, sizeof(double));
     while(k--)
         *dirichlet_param[k] = param;
 }
