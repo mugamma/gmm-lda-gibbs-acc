@@ -1,13 +1,22 @@
-#include <math.h>
 #include <stdlib.h>
 #include <float.h>
+
+#include <math.h>
+
+#ifndef M_E
+# define M_E		2.7182818284590452354	/* e */
+#endif
+#ifndef M_PI
+# define M_PI		3.14159265358979323846	/* pi */
+#endif
 
 #include "utils.h"
 #include "distrs.h"
 
-void uniform(double a, double b)
+
+double uniform(double a, double b)
 {
-    return a + random() * (b - a) / RAND_MAX;
+    return a + rand() * (b - a) / RAND_MAX;
 }
 
 double uniform_pdf(double x, double a, double b)
@@ -83,12 +92,12 @@ double gamma(double shape, double rate)
 
 double gamma_pdf(double x, double shape, double rate)
 {
-    return x <= 0 ? 0 : pow(rate*x, shape) / gamma(shape) * exp(-rate*x)/x;
+    return x <= 0 ? 0 : pow(rate*x, shape) / tgamma(shape) * exp(-rate*x)/x;
 }
 
 double gamma_cdf(double x, double shape, double rate)
 {
-    return x <= 0 ? 0 : ligamma(shape, rate * x) / gamma(shape);
+    return x <= 0 ? 0 : ligamma(shape, rate * x) / tgamma(shape);
 }
 
 double inverse_gamma(double shape, double scale)
@@ -98,12 +107,12 @@ double inverse_gamma(double shape, double scale)
 
 double inverse_gamma_pdf(double x, double shape, double scale)
 {
-    return x <= 0 ? 0 : pow(scale/x, shape) / gamma(shape) * exp(-scale/x)/x;
+    return x <= 0 ? 0 : pow(scale/x, shape) / tgamma(shape) * exp(-scale/x)/x;
 }
 
 double inverse_gamma_cdf(double x, double shape, double scale)
 {
-    return x <= 0 ? 0 : uigamma(shape, scale / x) / gamma(shape);
+    return x <= 0 ? 0 : uigamma(shape, scale / x) / tgamma(shape);
 }
 
 void dirichlet(double *dst, double *param, size_t n)
