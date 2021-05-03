@@ -5,7 +5,13 @@
 #include <stdlib.h>
 
 
-void vec_add(double *dst, double *u, double *v, size_t k)
+void vec_add_dd(double *dst, double *u, double *v, size_t k)
+{
+    for(int i=0; i < k; i++)
+        dst[i] = u[i] + v[i];
+}
+
+void vec_add_ud(double *dst, unsigned int *u, double *v, size_t k)
 {
     for(int i=0; i < k; i++)
         dst[i] = u[i] + v[i];
