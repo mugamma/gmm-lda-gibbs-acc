@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 #include "../src/gmm.h"
-
-
+#include "../src/utils.h"
 
 
 const double DATA[] = {11.26, 28.93, 30.52, 30.09, 29.46, 10.03, 11.24, 11.55,
