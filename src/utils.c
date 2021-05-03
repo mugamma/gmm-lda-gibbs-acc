@@ -26,6 +26,8 @@ void normalize(double *v, size_t n)
         v[i] /= sum;
 }
 
+double square(double x) { return x*x; }
+
 double ligamma(double s, double x)
 {
     double sum=0, term=1/s;
@@ -35,6 +37,8 @@ double ligamma(double s, double x)
     }
     return pow(x, s) * sum;
 }
+
+double uigamma(double s, double x) { return tgamma(s) - ligamma(s, x); }
 
 double beta(double *x, size_t n)
 {
@@ -50,3 +54,5 @@ void *abort_calloc(size_t nmemb, size_t size)
         fputs("insufficient memory", stderr), abort();
     return mem;
 }
+
+void *abort_malloc(size_t size) { return abort_calloc(1, size); }

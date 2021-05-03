@@ -8,9 +8,10 @@
 
 void alloc_dirichlet_param(double **dirichlet_param, double param, size_t k)
 {
+    
     *dirichlet_param = (double *) abort_calloc(k, sizeof(double));
     while(k--)
-        *dirichlet_param[k] = param;
+        (*dirichlet_param)[k] = param;
 }
 
 void free_dirichlet_param(double *dirichlet_param)

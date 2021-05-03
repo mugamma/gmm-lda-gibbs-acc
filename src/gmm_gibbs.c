@@ -31,21 +31,22 @@ struct gmm_gibbs_state {
     struct gmm_sufficient_statistic *ss;
 };
 
-void alloc_gmm_gibbs_state(struct gmm_gibbs_state *state,
-                           size_t n, size_t k, double *data,
-                           struct gmm_prior prior,
-                           struct gmm_params *params)
+struct gmm_gibbs_state *
+alloc_gmm_gibbs_state(size_t n, size_t k, double *data, struct gmm_prior prior,
+                      struct gmm_params *params)
 {
-    state->n = n;
-    state->k = k;
-    state->data = data;
-    state->prior = prior;
-    state->params = params;
-    state->ss = (struct gmm_sufficient_statistic*)
+    struct gmm_gibbs_state *s = abort_malloc(sizeof(struct gmm_gibbs_state));
+    s->n = n;
+    s->k = k;
+    s->data = data;
+    s->prior = prior;
+    s->params = params;
+    s->ss = (struct gmm_sufficient_statistic*)
         abort_malloc(sizeof(struct gmm_sufficient_statistic));
-    state->ss->ns = (unsigned *) abort_calloc(state->k, sizeof(unsigned));
-    state->ss->comp_sums = (double *) abort_calloc(state->k, sizeof(double));
-    state->ss->comp_sqsums = (double *) abort_calloc(state->k, sizeof(double));
+    s->ss->ns = (unsigned *) abort_calloc(k, sizeof(unsigned int));
+    s->ss->comp_sums = (double *) abort_calloc(k, sizeof(double));
+    s->ss->comp_sqsums = (double *) abort_calloc(k, sizeof(double));
+    return s;
 }
 
 void free_gmm_gibbs_state(struct gmm_gibbs_state *state)
@@ -54,6 +55,7 @@ void free_gmm_gibbs_state(struct gmm_gibbs_state *state)
     free(state->ss->comp_sums);
     free(state->ss->comp_sqsums);
     free(state->ss);
+    free(state);
 }
 
 void clear_sufficient_statistic(struct gmm_gibbs_state *state)

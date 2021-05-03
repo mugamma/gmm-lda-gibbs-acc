@@ -19,7 +19,7 @@ gmm_gibbs: src/gmm_gibbs.c src/gmm.h
 
 int_test: test/int_test.c
 	$(CC) $(CFLAGS) obj/* $^ -o bin/$@
-	@echo ./bin/$@
+	./bin/$@
 
 clean:
 	rm -f bin/*

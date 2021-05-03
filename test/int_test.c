@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "../src/gmm.h"
 #include "../src/utils.h"
@@ -50,9 +52,9 @@ int main()
     struct gmm_gibbs_state *gibbs_state;
     struct gmm_params params = {.weights=weights, .means=means, .vars=vars,
                                 .zs=zs};
+    srand(time(NULL));
     rand_init_gmm_params(&params, N, K, PRIOR);
-
-    alloc_gmm_gibbs_state(gibbs_state, N, K, DATA, PRIOR, &params);
+    gibbs_state = alloc_gmm_gibbs_state(N, K, DATA, PRIOR, &params);
     gibbs(gibbs_state, ITERS);
     free_gmm_gibbs_state(gibbs_state);
 

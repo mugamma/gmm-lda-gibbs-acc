@@ -34,10 +34,9 @@ struct gmm_gibbs_state;
 void rand_init_gmm_params(struct gmm_params *params, size_t n, size_t k,
                           struct gmm_prior prior);
 
-void alloc_gmm_gibbs_state(struct gmm_gibbs_state *state,
-                           size_t n, size_t k, double *data,
-                           struct gmm_prior prior,
-                           struct gmm_params *params);
+struct gmm_gibbs_state *alloc_gmm_gibbs_state(size_t n, size_t k, double *data,
+                                              struct gmm_prior prior,
+                                              struct gmm_params *params);
 
 void free_gmm_gibbs_state(struct gmm_gibbs_state *state);
 
