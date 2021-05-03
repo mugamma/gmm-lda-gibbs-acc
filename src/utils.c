@@ -1,4 +1,7 @@
 #include <float.h>
+#include <math.h>
+#include <stddef.h>
+
 
 void vec_add(double *dst, double *u, double *v, size_t k)
 {
@@ -28,6 +31,6 @@ double ligamma(double s, double x)
 double beta(double *x, size_t n)
 {
     double gamma_prod=1, sum=0;
-    for(int i=0; i < n; gamma_prod *= gamma(x[i]), sum += x[i], i++);
-    return gamma_prod / gamma(sum);
+    for(int i=0; i < n; gamma_prod *= tgamma(x[i]), sum += x[i], i++);
+    return gamma_prod / tgamma(sum);
 }

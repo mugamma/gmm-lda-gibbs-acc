@@ -9,6 +9,6 @@ inline double square(double x) { return x * x; }
 
 double ligamma(double s, double x);
 
-double uigamma(double s, double x) { return gamma(s) - ligamma(s, x); }
+double uigamma(double s, double x) { return tgamma(s) - ligamma(s, x); }
 
 double beta(double *x, size_t n);
