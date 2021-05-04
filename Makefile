@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=--std=c99 -Wall -Wpedantic -lm
-TESTS := int_test
+TESTS := cont_pdf_test int_test 
 MODULES := distrs utils gmm gmm_gibbs
 
 all: $(MODULES) $(TESTS)
@@ -16,6 +16,10 @@ gmm: src/gmm.c src/gmm.h
 
 gmm_gibbs: src/gmm_gibbs.c src/gmm.h
 	$(CC) -c $(CFLAGS) $< -o obj/$@.o
+
+cont_pdf_test: test/cont_pdf_test.c
+	$(CC) $(CFLAGS) obj/* $^ -o bin/$@
+	./bin/$@
 
 int_test: test/int_test.c
 	$(CC) $(CFLAGS) obj/* $^ -o bin/$@
