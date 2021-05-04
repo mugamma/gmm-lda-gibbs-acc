@@ -51,7 +51,7 @@ test_params_list = [
     TestParams(-1, 10, 1000, lambda x: invgamma.pdf(x, 1.25, 0, 2),
         'inverse_gamma(1.25, 2) pdf', 'inverse_gamma_pdf', (1.25, 2)),
     TestParams(-1, 10, 1000, lambda x: invgamma.cdf(x, 1),
-        'gamma(1, 1) cdf', 'inverse_gamma_cdf', (1, 1)),
+        'inverse_gamma(1, 1) cdf', 'inverse_gamma_cdf', (1, 1)),
     TestParams(-1, 10, 1000, lambda x: invgamma.cdf(x, 1.25, 0, 1),
         'inverse_gamma(1.25, 1) cdf', 'inverse_gamma_cdf', (1.25, 1)),
     TestParams(-1, 10, 1000, lambda x: invgamma.cdf(x, 1.25, 0, 1/2),
@@ -99,10 +99,10 @@ def make_param_strs(test_param):
 def make_main(n):
     call_str = 'test_fn(x_{0}, y_{0}, n_{0}, f_{0}, name_{0})'
     calls = (' &&\n' + ' '*14).join(call_str.format(i) for i in range(n))
-    return 'int main()\n{{\n    return !!({});\n}}'.format(calls)
+    return 'int main()\n{{\n    return !({});\n}}'.format(calls)
 
 if __name__ == '__main__':
     print(head)
     for i, test_params in enumerate(test_params_list):
         print(test_params_str.format(i=i, **make_param_strs(test_params)))
-    print(make_main(len(test_params)))
+    print(make_main(len(test_params_list)))
