@@ -101,7 +101,7 @@ void update_means(struct gmm_gibbs_state *state)
 void update_vars(struct gmm_gibbs_state *state)
 {
     double alpha = state->prior.vars_shape_prior,
-           beta = state->prior.vars_shape_prior, shape, rate;
+           beta = state->prior.vars_rate_prior, shape, rate;
     for(int j=0; j < state->k; j++) {
         double sum_xs = state->ss->comp_sums[j],
                sqsum_xs = state->ss->comp_sqsums[j],
@@ -120,7 +120,7 @@ void update_zs(struct gmm_gibbs_state *state)
         for(int j=0; j < state->k; j++) {
             mu = state->params->means[j];
             sigma2 = state->params->vars[j];
-            weights[j] = gaussian_pdf(mu, sigma2, x);
+            weights[j] = gaussian_pdf(x, mu, sigma2);
         }
         normalize(weights, state->k);
         state->params->zs[i] = categorical(weights, state->k);
