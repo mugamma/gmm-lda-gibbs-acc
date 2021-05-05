@@ -26,7 +26,7 @@ double uniform_pdf(double x, double a, double b)
 
 double uniform_cdf(double x, double a, double b)
 {
-    return x < b && x > a ? x/(b - a) : 0;
+    return x < a ? 0 : x < b ? (x - a)/(b - a) : 1;
 }
 
 int categorical(double *param, size_t n)
@@ -112,7 +112,7 @@ double inverse_gamma_pdf(double x, double shape, double scale)
 
 double inverse_gamma_cdf(double x, double shape, double scale)
 {
-    return x <= 0 ? 0 : uigamma(shape, scale / x) / tgamma(shape);
+    return x <= 0 ? 0 : 1 - ligamma(shape, scale / x) / tgamma(shape);
 }
 
 void dirichlet(double *dst, double *param, size_t n)

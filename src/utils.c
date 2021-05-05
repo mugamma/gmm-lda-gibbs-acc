@@ -31,11 +31,8 @@ double square(double x) { return x*x; }
 double ligamma(double s, double x)
 {
     double sum=0, term=1/s;
-    for(int k=1; term < DBL_EPSILON; k++) {
-        sum += term;
-        term *= -x/k * (s + k - 1)/(s + k);
-    }
-    return pow(x, s) * sum;
+    for(int k=1; term >= DBL_EPSILON; sum += term, term *= x/(s + k), k++);
+    return pow(x, s) * exp(-x) * sum; 
 }
 
 double uigamma(double s, double x) { return tgamma(s) - ligamma(s, x); }
