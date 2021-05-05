@@ -26,7 +26,7 @@ cont_pdf_test: test/cont_pdf_test.c
 	./bin/$@
 
 cont_gof_test: test/cont_gof_test.c
-	$(CC) $(CFLAGS) obj/* $^ -o bin/$@
+	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
 	./bin/$@
 
 int_test: test/int_test.c
