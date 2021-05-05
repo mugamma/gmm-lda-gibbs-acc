@@ -69,7 +69,8 @@ int test_fn(double *x, double *y, size_t n, double (*f)(double x), char *name)
 {
     for(int i=0; i < n; i++) {
         if(abs(y[i] - f(x[i])) > EPS) {
-            printf("%s failed: expected %f, got %f\n", name, y[i], f(x[i]));
+            printf("%s failed: expected %f at %f, got %f\n",
+                   name, y[i], x[i], f(x[i]));
             return 0;
         }
     }
@@ -98,7 +99,7 @@ def make_param_strs(test_param):
 
 def make_main(n):
     call_str = 'test_fn(x_{0}, y_{0}, n_{0}, f_{0}, name_{0})'
-    calls = (' &&\n' + ' '*14).join(call_str.format(i) for i in range(n))
+    calls = (' &&\n' + ' '*13).join(call_str.format(i) for i in range(n))
     return 'int main()\n{{\n    return !({});\n}}'.format(calls)
 
 if __name__ == '__main__':
