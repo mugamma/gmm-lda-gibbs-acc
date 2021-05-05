@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=--std=c99 -Wall -Wpedantic -lm
 INIT := init
 MODULES := distrs utils gmm gmm_gibbs
-TESTS := int_test
+TESTS := cont_pdf_test int_test
 
 all: $(INIT) $(MODULES) $(TESTS)
 
