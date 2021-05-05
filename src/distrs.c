@@ -87,7 +87,7 @@ double gamma(double shape, double rate)
             eta = uniform(0, 1) * exp(-xi);
         }
     } while(eta > pow(xi, delta -1) * exp(-xi));
-    return rate * (xi + exp_part);
+    return (xi + exp_part) /rate;
 }
 
 double gamma_pdf(double x, double shape, double rate)
