@@ -29,7 +29,7 @@ void rand_init_gmm_params(struct gmm_params *params, size_t n, size_t k,
         params->means[j] = gaussian(prior.means_mean_prior,
                                     prior.means_var_prior);
         params->vars[j] = inverse_gamma(prior.vars_shape_prior,
-                                        prior.vars_rate_prior);
+                                        prior.vars_scale_prior);
     }
     for(int i=0; i < n; params->zs[i++] = categorical(params->weights, k));
     free_dirichlet_param(dirichlet_param);

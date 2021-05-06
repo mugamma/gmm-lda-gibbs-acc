@@ -15,8 +15,8 @@ struct gmm_prior {
     // the shape parameter of the inverse-gamma prior on component variance
     double vars_shape_prior;
 
-    // the rate parameter of the inverse-gamma prior on component variance
-    double vars_rate_prior;
+    // the scale parameter of the inverse-gamma prior on component variance
+    double vars_scale_prior;
 };
 
 struct gmm_params {

@@ -29,7 +29,7 @@ const struct gmm_prior PRIOR = {.dirichlet_prior=5.0,
                                 .means_mean_prior=0.0,
                                 .means_var_prior=100.0,
                                 .vars_shape_prior=2.0,
-                                .vars_rate_prior=10.0};
+                                .vars_scale_prior=10.0};
 
 void print_params(struct gmm_params *params)
 {

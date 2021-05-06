@@ -69,7 +69,7 @@ void update_sufficient_statistic(struct gmm_gibbs_state *state)
 {
     // XXX XXX this is the function that needs to be accelerated.
     clear_sufficient_statistic(state);
-    for(size_t i = 0; i < state->n; i++) {
+    for(size_t i=0; i < state->n; i++) {
         double x = state->data[i];
         unsigned int z = state->params->zs[i];
         state->ss->ns[z]++;
@@ -101,14 +101,14 @@ void update_means(struct gmm_gibbs_state *state)
 void update_vars(struct gmm_gibbs_state *state)
 {
     double alpha = state->prior.vars_shape_prior,
-           beta = state->prior.vars_rate_prior, shape, rate;
+           beta = state->prior.vars_scale_prior, shape, scale;
     for(int j=0; j < state->k; j++) {
         double sum_xs = state->ss->comp_sums[j],
                sqsum_xs = state->ss->comp_sqsums[j],
                mu = state->params->means[j], ns = state->ss->ns[j];
                shape = alpha + ns/2;
-               rate = beta + sqsum_xs - 2*mu*sum_xs + ns * mu*mu; 
-        state->params->vars[j] = inverse_gamma(shape, rate);
+               scale = beta + sqsum_xs/2 - mu*sum_xs + ns * mu*mu/2; 
+        state->params->vars[j] = inverse_gamma(shape, scale);
     }
 }
 
