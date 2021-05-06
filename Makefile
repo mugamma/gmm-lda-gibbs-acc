@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=--std=c99 -Wall -Wpedantic -lm
 INIT := init
-TESTS := cont_pdf_test cont_gof_test int_test 
+TESTS := cont_pdf_test cont_gof_test gmm_int_test 
 MODULES := distrs utils gmm gmm_gibbs
 
 all: $(INIT) $(MODULES) $(TESTS)
@@ -29,7 +29,7 @@ cont_gof_test: test/cont_gof_test.c
 	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
 	./bin/$@
 
-int_test: test/int_test.c
+gmm_int_test: test/gmm_int_test.c
 	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
 	./bin/$@
 
