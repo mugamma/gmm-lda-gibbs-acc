@@ -53,3 +53,11 @@ void *abort_calloc(size_t nmemb, size_t size)
 }
 
 void *abort_malloc(size_t size) { return abort_calloc(1, size); }
+
+FILE *abort_fopen(const char *pathname, const char *mode)
+{
+    FILE *file = fopen(pathname, mode);
+    if(file == NULL)
+        fprintf(stderr, "could not open file %s", pathname), abort();
+    return file;
+}

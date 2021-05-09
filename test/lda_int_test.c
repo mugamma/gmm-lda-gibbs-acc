@@ -15,7 +15,7 @@ const struct lda_prior PRIOR ={.word_distr_prior=1e-2,
 void read_corpus(struct lda_corpus *corp, const char *filename)
 {
     unsigned int tot_len=0;
-    FILE *corp_file = fopen(filename, "r");
+    FILE *corp_file = abort_fopen(filename, "r");
     fscanf(corp_file, "%d %d", &corp->num_docs, &corp->vocab_size);
     corp->doc_lens = (size_t*) abort_calloc(corp->num_docs, sizeof(size_t));
     corp->docs = (unsigned**) abort_calloc(corp->num_docs, sizeof(unsigned*));
@@ -35,7 +35,7 @@ int compare(const void *a, const void *b)
 
 void print_topics(const struct lda_params params, const char *wordsfilename)
 {
-    FILE *words_file = fopen(wordsfilename, "r");
+    FILE *words_file = abort_fopen(wordsfilename, "r");
     size_t vocab_size, max_width;
     fscanf(words_file, "%u %u", &vocab_size, &max_width);
     char words[vocab_size][max_width];
