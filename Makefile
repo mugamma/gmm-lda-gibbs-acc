@@ -23,11 +23,11 @@ utils: src/utils.c src/utils.h
 	$(CC) -c $(CFLAGS) $< -o obj/$@.o
 
 cont_pdf_test: test/cont_pdf_test.c
-	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
+	$(CC) $(CFLAGS) obj/{utils,distrs}.o $^ -o bin/$@ -lm
 	./bin/$@
 
 cont_gof_test: test/cont_gof_test.c
-	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
+	$(CC) $(CFLAGS) obj/{utils,distrs}.o $^ -o bin/$@ -lm
 	./bin/$@
 
 gmm: src/gmm.c src/gmm.h
@@ -37,7 +37,7 @@ gmm_gibbs: src/gmm_gibbs.c src/gmm.h
 	$(CC) -c $(CFLAGS) $< -o obj/$@.o
 
 gmm_int_test: test/gmm_int_test.c
-	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
+	$(CC) $(CFLAGS) obj/{distrs,utils,gmm,gmm_gibbs}.o $^ -o bin/$@ -lm
 	./bin/$@
 
 lda: src/lda.c src/lda.h
@@ -47,7 +47,7 @@ lda_gibbs: src/lda_gibbs.c src/lda.h
 	$(CC) -c $(CFLAGS) $< -o obj/$@.o
 
 lda_int_test: test/lda_int_test.c
-	$(CC) $(CFLAGS) obj/* $^ -o bin/$@ -lm
+	$(CC) $(CFLAGS) obj/{distrs,utils,lda,lda_gibbs}.o $^ -o bin/$@ -lm
 	./bin/$@
 
 clean:
