@@ -22,7 +22,7 @@ struct lda_params {
     double **doc_topic_distrs; // decidedly not tiled
     double **topic_word_distrs; // decidedly not tiled
 
-    unsigned int **word_topic_assignments; // decidedly not tiled
+    unsigned int **zs; // decidedly not tiled
 };
 
 struct lda_gibbs_state;
@@ -34,7 +34,7 @@ void rand_init_lda_params(struct lda_params *params,
 
 struct lda_gibbs_state *alloc_lda_gibbs_state(struct lda_params *params,
                                               struct lda_corpus corpus,
-                                              unsigned int num_topics,
+                                              size_t num_topics,
                                               struct lda_prior prior);
 
 void free_lda_gibbs_state(struct lda_gibbs_state *state);
