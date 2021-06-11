@@ -14,68 +14,68 @@
 #include "distrs.h"
 
 
-double uniform(double a, double b)
+float uniform(float a, float b)
 {
     return a + rand() * (b - a) / RAND_MAX;
 }
 
-double uniform_pdf(double x, double a, double b)
+float uniform_pdf(float x, float a, float b)
 {
     return x < b && x > a ? 1/(b - a) : 0;
 }
 
-double uniform_cdf(double x, double a, double b)
+float uniform_cdf(float x, float a, float b)
 {
     return x < a ? 0 : x < b ? (x - a)/(b - a) : 1;
 }
 
-int categorical(double *param, size_t n)
+int categorical(float *param, size_t n)
 {
-    double u = uniform(0, 1), sum=0;
+    float u = uniform(0, 1), sum=0;
     int i = 0;
     while(u > sum)
         sum += param[i++];
     return i - 1;
 }
 
-double categorical_pdf(int x, double *param, size_t n)
+float categorical_pdf(int x, float *param, size_t n)
 {
     if(x < 0 || x >= n)
         return 0;
     return param[x];
 }
 
-double categorical_cdf(int x, double *param, size_t n)
+float categorical_cdf(int x, float *param, size_t n)
 {
     if(x < 0 || x >= n)
         return 0;
-    double res = param[0];
+    float res = param[0];
     while(x)
         res += param[x--];
     return res;
 }
 
-double gaussian(double mean, double var)
+float gaussian(float mean, float var)
 {
-    double u=uniform(0, 1), v=uniform(0, 1);
+    float u=uniform(0, 1), v=uniform(0, 1);
     return mean + sqrt(-2 * log(u) * var) * cos(2*M_PI * v);
 }
 
-double gaussian_pdf(double x, double mean, double var)
+float gaussian_pdf(float x, float mean, float var)
 {
     return exp(-square(x - mean)/2/var) / sqrt(2*M_PI * var);
 }
 
-double gaussian_cdf(double x, double mean, double var)
+float gaussian_cdf(float x, float mean, float var)
 {
     return (1 + erf((x - mean) / sqrt(2 * var))) / 2;
 }
 
 //Wikipedia algorithm
-double gamma(double shape, double rate)
+float gamma(float shape, float rate)
 {
     int n = floor(shape);
-    double delta = shape - n, exp_part = 0,  xi, eta;
+    float delta = shape - n, exp_part = 0,  xi, eta;
     while(n--)
         exp_part += -log(uniform(0, 1));
     if(delta > DBL_EPSILON) do {
@@ -90,41 +90,41 @@ double gamma(double shape, double rate)
     return (xi + exp_part) /rate;
 }
 
-double gamma_pdf(double x, double shape, double rate)
+float gamma_pdf(float x, float shape, float rate)
 {
     return x <= 0 ? 0 : pow(rate*x, shape) / tgamma(shape) * exp(-rate*x)/x;
 }
 
-double gamma_cdf(double x, double shape, double rate)
+float gamma_cdf(float x, float shape, float rate)
 {
     return x <= 0 ? 0 : ligamma(shape, rate * x) / tgamma(shape);
 }
 
-double inverse_gamma(double shape, double scale)
+float inverse_gamma(float shape, float scale)
 {
     return 1/gamma(shape, scale);
 }
 
-double inverse_gamma_pdf(double x, double shape, double scale)
+float inverse_gamma_pdf(float x, float shape, float scale)
 {
     return x <= 0 ? 0 : pow(scale/x, shape) / tgamma(shape) * exp(-scale/x)/x;
 }
 
-double inverse_gamma_cdf(double x, double shape, double scale)
+float inverse_gamma_cdf(float x, float shape, float scale)
 {
     return x <= 0 ? 0 : 1 - ligamma(shape, scale / x) / tgamma(shape);
 }
 
-void dirichlet(double *dst, double *param, size_t n)
+void dirichlet(float *dst, float *param, size_t n)
 {
     for(int i=0; i < n; i++)
         dst[i] = gamma(param[i], 1);
     normalize(dst, n);
 }
 
-double dirichlet_pdf(double *x, double *param, size_t n)
+float dirichlet_pdf(float *x, float *param, size_t n)
 {
-    double sum=0, unnorm_pdf=1;
+    float sum=0, unnorm_pdf=1;
     for(int i=0; i < n; sum += x[i], unnorm_pdf *= pow(x[i], param[i]-1), i++);
     return sum == 1.0 ? unnorm_pdf / beta(x, n) : 0.0;
 }

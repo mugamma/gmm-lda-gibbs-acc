@@ -6,23 +6,21 @@
 #include "utils.h"
 #include "gmm.h"
 
-void alloc_dirichlet_param(double **dirichlet_param, double param, size_t k)
+void alloc_dirichlet_param(float **dirichlet_param, float param, size_t k)
 {
     
-    *dirichlet_param = (double *) abort_calloc(k, sizeof(double));
+    *dirichlet_param = (float *) abort_calloc(k, sizeof(float));
     while(k--)
         (*dirichlet_param)[k] = param;
 }
 
-void free_dirichlet_param(double *dirichlet_param)
+void free_dirichlet_param(float *dirichlet_param)
 {
     free(dirichlet_param);
 }
 
-void rand_init_gmm_params(struct gmm_params *params, size_t n, size_t k,
-                          struct gmm_prior prior)
-{
-    double *dirichlet_param;
+void rand_init_gmm_params(struct gmm_params *params, size_t n, size_t k, struct gmm_prior prior) {
+    float *dirichlet_param;
     alloc_dirichlet_param(&dirichlet_param, prior.dirichlet_prior, k);
     dirichlet(params->weights, dirichlet_param, k);
     for(int j=0; j < k; j++) {

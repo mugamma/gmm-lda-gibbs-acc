@@ -3,18 +3,18 @@
 #include <math.h>
 
 // add `u` and `v` of length `k` and store the result in `dst`
-void vec_add_dd(double *dst, double *u, double *v, size_t k);
-void vec_add_ud(double *dst, unsigned int *u, double *v, size_t k);
+void vec_add_dd(float *dst, float *u, float *v, size_t k);
+void vec_add_ud(float *dst, unsigned int *u, float *v, size_t k);
 
-void normalize(double *v, size_t n);
+void normalize(float *v, size_t n);
 
-double square(double x);
+float square(float x);
 
-double ligamma(double s, double x);
+float ligamma(float s, float x);
 
-extern double uigamma(double s, double x);
+extern float uigamma(float s, float x);
 
-double beta(double *x, size_t n);
+float beta(float *x, size_t n);
 
 // try to malloc/calloc and abort if unsuccessful
 void *abort_calloc(size_t nmemb, size_t size);

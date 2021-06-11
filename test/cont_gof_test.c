@@ -15,18 +15,18 @@
 // sample size
 #define N 100000
 
-double sample[N];
+float sample[N];
 
-int double_comp(const void *a, const void *b)
+int float_comp(const void *a, const void *b)
 {
-    return *((double*) a) - *((double*) b) < 0 ? -1 : 1;
+    return *((float*) a) - *((float*) b) < 0 ? -1 : 1;
 }
 
-int cramer_von_mises(double (*sampler)(), double (*cdf)(double), char *name)
+int cramer_von_mises(float (*sampler)(), float (*cdf)(float), char *name)
 {
     for(size_t i=0; i < N; sample[i++] = sampler());
-    qsort(sample, N, sizeof(double), double_comp);
-    double statistic = 1.0 / 12 / N;
+    qsort(sample, N, sizeof(float), float_comp);
+    float statistic = 1.0 / 12 / N;
     for(size_t i=1; i <= N; i++)
         statistic += square(cdf(sample[i-1]) - (2.0*i - 1)/2/N);
     int success = statistic < CRITICAL_VAL ? 1 : 0;
@@ -35,26 +35,26 @@ int cramer_von_mises(double (*sampler)(), double (*cdf)(double), char *name)
     return success;
 }
 
-double sampler_1() { return uniform(0, 1); }
-double cdf_1(double x) { return uniform_cdf(x, 0, 1); }
+float sampler_1() { return uniform(0, 1); }
+float cdf_1(float x) { return uniform_cdf(x, 0, 1); }
 
-double sampler_2() { return gaussian(0, 1); }
-double cdf_2(double x) { return gaussian_cdf(x, 0, 1); }
+float sampler_2() { return gaussian(0, 1); }
+float cdf_2(float x) { return gaussian_cdf(x, 0, 1); }
 
-double sampler_3() { return gaussian(2, 0.4); }
-double cdf_3(double x) { return gaussian_cdf(x, 2, 0.4); }
+float sampler_3() { return gaussian(2, 0.4); }
+float cdf_3(float x) { return gaussian_cdf(x, 2, 0.4); }
 
-double sampler_4() { return gamma(1, 1); }
-double cdf_4(double x) { return gamma_cdf(x, 1, 1); }
+float sampler_4() { return gamma(1, 1); }
+float cdf_4(float x) { return gamma_cdf(x, 1, 1); }
 
-double sampler_5() { return gamma(1.25, 2); }
-double cdf_5(double x) { return gamma_cdf(x, 1.25, 2); }
+float sampler_5() { return gamma(1.25, 2); }
+float cdf_5(float x) { return gamma_cdf(x, 1.25, 2); }
 
-double sampler_6() { return inverse_gamma(1, 1); }
-double cdf_6(double x) { return inverse_gamma_cdf(x, 1, 1); }
+float sampler_6() { return inverse_gamma(1, 1); }
+float cdf_6(float x) { return inverse_gamma_cdf(x, 1, 1); }
 
-double sampler_7() { return inverse_gamma(1.25, 2); }
-double cdf_7(double x) { return inverse_gamma_cdf(x, 1.25, 2); }
+float sampler_7() { return inverse_gamma(1.25, 2); }
+float cdf_7(float x) { return inverse_gamma_cdf(x, 1.25, 2); }
 
 int main()
 {

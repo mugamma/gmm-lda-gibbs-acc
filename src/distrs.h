@@ -1,25 +1,25 @@
 #pragma once
 
-double uniform(double a, double b);
-double uniform_pdf(double x, double a, double b);
-double uniform_cdf(double x, double a, double b);
+float uniform(float a, float b);
+float uniform_pdf(float x, float a, float b);
+float uniform_cdf(float x, float a, float b);
 
-int categorical(double *param, size_t n);
-double categorical_pdf(int x, double *param, size_t n);
-double categorical_cdf(int x, double *param, size_t n);
+int categorical(float *param, size_t n);
+float categorical_pdf(int x, float *param, size_t n);
+float categorical_cdf(int x, float *param, size_t n);
 
-double gaussian(double mean, double var);
-double gaussian_pdf(double x, double mean, double var);
-double gaussian_cdf(double x, double mean, double var);
+float gaussian(float mean, float var);
+float gaussian_pdf(float x, float mean, float var);
+float gaussian_cdf(float x, float mean, float var);
 
-double gamma(double shape, double rate);
-double gamma_pdf(double x, double shape, double rate);
-double gamma_cdf(double x, double shape, double rate);
+float gamma(float shape, float rate);
+float gamma_pdf(float x, float shape, float rate);
+float gamma_cdf(float x, float shape, float rate);
 
-double inverse_gamma(double shape, double scale);
-double inverse_gamma_pdf(double x, double shape, double scale);
-double inverse_gamma_cdf(double x, double shape, double scale);
+float inverse_gamma(float shape, float scale);
+float inverse_gamma_pdf(float x, float shape, float scale);
+float inverse_gamma_cdf(float x, float shape, float scale);
 
 // sample from an `n`-dimensional dirichlet in `dst`
-void dirichlet(double *dst, double *param, size_t n);
-double dirichlet_pdf(double *x, double *param, size_t n);
+void dirichlet(float *dst, float *param, size_t n);
+float dirichlet_pdf(float *x, float *param, size_t n);

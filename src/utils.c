@@ -5,41 +5,41 @@
 #include <stdlib.h>
 
 
-void vec_add_dd(double *dst, double *u, double *v, size_t k)
+void vec_add_dd(float *dst, float *u, float *v, size_t k)
 {
     for(int i=0; i < k; i++)
         dst[i] = u[i] + v[i];
 }
 
-void vec_add_ud(double *dst, unsigned int *u, double *v, size_t k)
+void vec_add_ud(float *dst, unsigned int *u, float *v, size_t k)
 {
     for(int i=0; i < k; i++)
         dst[i] = u[i] + v[i];
 }
 
-void normalize(double *v, size_t n)
+void normalize(float *v, size_t n)
 {
-    double sum = 0;
+    float sum = 0;
     for(int i=0; i < n; i++)
         sum += v[i];
     for(int i=0; i < n; i++)
         v[i] /= sum;
 }
 
-double square(double x) { return x*x; }
+float square(float x) { return x*x; }
 
-double ligamma(double s, double x)
+float ligamma(float s, float x)
 {
-    double sum=0, term=1/s;
+    float sum=0, term=1/s;
     for(int k=1; term >= DBL_EPSILON; sum += term, term *= x/(s + k), k++);
     return pow(x, s) * exp(-x) * sum; 
 }
 
-double uigamma(double s, double x) { return tgamma(s) - ligamma(s, x); }
+float uigamma(float s, float x) { return tgamma(s) - ligamma(s, x); }
 
-double beta(double *x, size_t n)
+float beta(float *x, size_t n)
 {
-    double gamma_prod=1, sum=0;
+    float gamma_prod=1, sum=0;
     for(int i=0; i < n; gamma_prod *= tgamma(x[i]), sum += x[i], i++);
     return gamma_prod / tgamma(sum);
 }
