@@ -8,8 +8,8 @@ def gaussian_pdf(mu, sigma2):
 
 if __name__ == '__main__':
     k = int(input())
-    comp_params = [read_array(float) for _ in range(k)]
-    data = read_array(float)
+    comp_params = [read_array(DTYPE) for _ in range(k)]
+    data = read_array(DTYPE)
     zs = read_array(int)
 
     plt.figure()
