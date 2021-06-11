@@ -4,9 +4,9 @@
 #include "string.h"
 #include "../src/gmm.h"
 
-void printParams(struct gmm_params *params, float *data, size_t n, size_t k);
+void printParams(struct gmm_params *params, DTYPE *data, size_t n, size_t k);
 
-void randomInit(float *data, unsigned *zs, const int n, const int k);
+void randomInit(DTYPE *data, unsigned *zs, const int n, const int k);
 
 void verify(struct gmm_params *params, unsigned *zs, size_t n);
 
@@ -27,15 +27,16 @@ int main(int argc, char **argv) {
     DEBUG = (argc > 1) && (strcmp(argv[1], "--debug") == 0) ? 1 : 0;
     srand(42);
 
-    const unsigned DATA_MEM_SIZE = N * sizeof(float);
+    const unsigned DATA_MEM_SIZE = N * sizeof(DTYPE);
     unsigned int zs[N];
-    float weights[K], means[K], vars[K], *dataManaged = malloc(DATA_MEM_SIZE);;
+    DTYPE weights[K], means[K], vars[K], *dataManaged = malloc(DATA_MEM_SIZE);;
     struct gmm_gibbs_state *gibbs_state;
     struct gmm_params params = {.weights=weights, .means=means, .vars=vars, .zs=zs};
 
     randomInit(dataManaged, zs, N, K);
     rand_init_gmm_params(&params, N, K, PRIOR);
     gibbs_state = alloc_gmm_gibbs_state(N, K, dataManaged, PRIOR, &params);
+    printParams(&params, dataManaged, N, K);
 
     gibbs(gibbs_state, ITERS);
 
@@ -45,7 +46,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void printParams(struct gmm_params *params, float *data, size_t n, size_t k) {
+void printParams(struct gmm_params *params, DTYPE *data, size_t n, size_t k) {
     printf("%lu\n", k);
     for (int i = 0; i < k; i++)
         printf("%f %f %f\n", params->weights[i], params->means[i],
@@ -58,9 +59,9 @@ void printParams(struct gmm_params *params, float *data, size_t n, size_t k) {
     putchar('\n');
 }
 
-void randomInit(float *data, unsigned *zs, const int n, const int k) {
+void randomInit(DTYPE *data, unsigned *zs, const int n, const int k) {
     unsigned cat = 0, mod = 0;;
-    float min = 0;
+    DTYPE min = 0;
     for (int i = 0; i < n; i++) {
         if (i < n / k) {
             min = 50;
@@ -79,7 +80,7 @@ void randomInit(float *data, unsigned *zs, const int n, const int k) {
             mod = 3;
             cat = 3;
         }
-        data[i] = min + (float) (rand() % mod);
+        data[i] = min + (DTYPE) (rand() % mod);
         zs[i] = cat;
     }
 }

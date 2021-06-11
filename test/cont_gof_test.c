@@ -15,18 +15,18 @@
 // sample size
 #define N 100000
 
-float sample[N];
+DTYPE sample[N];
 
-int float_comp(const void *a, const void *b)
+int DTYPE_comp(const void *a, const void *b)
 {
-    return *((float*) a) - *((float*) b) < 0 ? -1 : 1;
+    return *((DTYPE*) a) - *((DTYPE*) b) < 0 ? -1 : 1;
 }
 
-int cramer_von_mises(float (*sampler)(), float (*cdf)(float), char *name)
+int cramer_von_mises(DTYPE (*sampler)(), DTYPE (*cdf)(DTYPE), char *name)
 {
     for(size_t i=0; i < N; sample[i++] = sampler());
-    qsort(sample, N, sizeof(float), float_comp);
-    float statistic = 1.0 / 12 / N;
+    qsort(sample, N, sizeof(DTYPE), DTYPE_comp);
+    DTYPE statistic = 1.0 / 12 / N;
     for(size_t i=1; i <= N; i++)
         statistic += square(cdf(sample[i-1]) - (2.0*i - 1)/2/N);
     int success = statistic < CRITICAL_VAL ? 1 : 0;
@@ -35,26 +35,26 @@ int cramer_von_mises(float (*sampler)(), float (*cdf)(float), char *name)
     return success;
 }
 
-float sampler_1() { return uniform(0, 1); }
-float cdf_1(float x) { return uniform_cdf(x, 0, 1); }
+DTYPE sampler_1() { return uniform(0, 1); }
+DTYPE cdf_1(DTYPE x) { return uniform_cdf(x, 0, 1); }
 
-float sampler_2() { return gaussian(0, 1); }
-float cdf_2(float x) { return gaussian_cdf(x, 0, 1); }
+DTYPE sampler_2() { return gaussian(0, 1); }
+DTYPE cdf_2(DTYPE x) { return gaussian_cdf(x, 0, 1); }
 
-float sampler_3() { return gaussian(2, 0.4); }
-float cdf_3(float x) { return gaussian_cdf(x, 2, 0.4); }
+DTYPE sampler_3() { return gaussian(2, 0.4); }
+DTYPE cdf_3(DTYPE x) { return gaussian_cdf(x, 2, 0.4); }
 
-float sampler_4() { return gamma(1, 1); }
-float cdf_4(float x) { return gamma_cdf(x, 1, 1); }
+DTYPE sampler_4() { return gamma(1, 1); }
+DTYPE cdf_4(DTYPE x) { return gamma_cdf(x, 1, 1); }
 
-float sampler_5() { return gamma(1.25, 2); }
-float cdf_5(float x) { return gamma_cdf(x, 1.25, 2); }
+DTYPE sampler_5() { return gamma(1.25, 2); }
+DTYPE cdf_5(DTYPE x) { return gamma_cdf(x, 1.25, 2); }
 
-float sampler_6() { return inverse_gamma(1, 1); }
-float cdf_6(float x) { return inverse_gamma_cdf(x, 1, 1); }
+DTYPE sampler_6() { return inverse_gamma(1, 1); }
+DTYPE cdf_6(DTYPE x) { return inverse_gamma_cdf(x, 1, 1); }
 
-float sampler_7() { return inverse_gamma(1.25, 2); }
-float cdf_7(float x) { return inverse_gamma_cdf(x, 1.25, 2); }
+DTYPE sampler_7() { return inverse_gamma(1.25, 2); }
+DTYPE cdf_7(DTYPE x) { return inverse_gamma_cdf(x, 1.25, 2); }
 
 int main()
 {

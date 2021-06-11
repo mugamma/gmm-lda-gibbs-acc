@@ -1,25 +1,26 @@
 #pragma once
+#include "utils.h"
 
-float uniform(float a, float b);
-float uniform_pdf(float x, float a, float b);
-float uniform_cdf(float x, float a, float b);
+DTYPE uniform(DTYPE a, DTYPE b);
+DTYPE uniform_pdf(DTYPE x, DTYPE a, DTYPE b);
+DTYPE uniform_cdf(DTYPE x, DTYPE a, DTYPE b);
 
-int categorical(float *param, size_t n);
-float categorical_pdf(int x, float *param, size_t n);
-float categorical_cdf(int x, float *param, size_t n);
+int categorical(DTYPE *param, size_t n);
+DTYPE categorical_pdf(int x, DTYPE *param, size_t n);
+DTYPE categorical_cdf(int x, DTYPE *param, size_t n);
 
-float gaussian(float mean, float var);
-float gaussian_pdf(float x, float mean, float var);
-float gaussian_cdf(float x, float mean, float var);
+DTYPE gaussian(DTYPE mean, DTYPE var);
+DTYPE gaussian_pdf(DTYPE x, DTYPE mean, DTYPE var);
+DTYPE gaussian_cdf(DTYPE x, DTYPE mean, DTYPE var);
 
-float gamma(float shape, float rate);
-float gamma_pdf(float x, float shape, float rate);
-float gamma_cdf(float x, float shape, float rate);
+DTYPE gamma(DTYPE shape, DTYPE rate);
+DTYPE gamma_pdf(DTYPE x, DTYPE shape, DTYPE rate);
+DTYPE gamma_cdf(DTYPE x, DTYPE shape, DTYPE rate);
 
-float inverse_gamma(float shape, float scale);
-float inverse_gamma_pdf(float x, float shape, float scale);
-float inverse_gamma_cdf(float x, float shape, float scale);
+DTYPE inverse_gamma(DTYPE shape, DTYPE scale);
+DTYPE inverse_gamma_pdf(DTYPE x, DTYPE shape, DTYPE scale);
+DTYPE inverse_gamma_cdf(DTYPE x, DTYPE shape, DTYPE scale);
 
 // sample from an `n`-dimensional dirichlet in `dst`
-void dirichlet(float *dst, float *param, size_t n);
-float dirichlet_pdf(float *x, float *param, size_t n);
+void dirichlet(DTYPE *dst, DTYPE *param, size_t n);
+DTYPE dirichlet_pdf(DTYPE *x, DTYPE *param, size_t n);

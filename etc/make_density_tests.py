@@ -65,7 +65,7 @@ head = r"""#include <stdio.h>
 
 #define EPS 1e-5
 
-int test_fn(float *x, float *y, size_t n, float (*f)(float x), char *name)
+int test_fn(DTYPE *x, DTYPE *y, size_t n, DTYPE (*f)(DTYPE x), char *name)
 {
     for(int i=0; i < n; i++) {
         if(abs(y[i] - f(x[i])) > EPS) {
@@ -80,11 +80,11 @@ int test_fn(float *x, float *y, size_t n, float (*f)(float x), char *name)
 """
 
 test_params_str = """
-float x_{i}[] = {{{xs_str}}};
-float y_{i}[] = {{{ys_str}}};
+DTYPE x_{i}[] = {{{xs_str}}};
+DTYPE y_{i}[] = {{{ys_str}}};
 size_t n_{i} = {n};
 char name_{i}[] = "{name}";
-float f_{i}(float x) {{
+DTYPE f_{i}(DTYPE x) {{
     return {c_fn_name}(x, {args_str});
 }}
 """
